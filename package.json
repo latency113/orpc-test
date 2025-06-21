@@ -1,0 +1,57 @@
+{
+  "name": "orpc-backend",
+  "module": "src/index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@antfu/eslint-config": "^4.13.1",
+    "@dotenvx/dotenvx": "^1.44.0",
+    "@types/bun": "latest",
+    "commitizen": "^4.3.1",
+    "commitlint": "^19.8.1",
+    "commitlint-config-gitmoji": "^2.3.1",
+    "cz-customizable": "^7.4.0",
+    "eslint": "^9.26.0",
+    "eslint-plugin-perfectionist": "^4.13.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "scripts": {
+    "prepare": "bun .husky/install.mjs",
+    "dotenvx": "dotenvx",
+    "env:dev:dc": "dotenvx decrypt",
+    "env:dev:ec": "dotenvx encrypt",
+    "env:uat:ec": "dotenvx -f .env.uat encrypt",
+    "env:uat:dc": "dotenvx -f .env.uat decrypt",
+    "env:prod:ec": "dotenvx -f .env.prod encrypt",
+    "env:prod:dc": "dotenvx -f .env.prod decrypt",
+    "env:all:dc": "bun env:dev:dc && bun env:uat:dc && bun env:prod:dc",
+    "env:all:ec": "bun env:dev:ec && bun env:uat:ec && bun env:prod:ec",
+    "dotenvx:example": "bun env:dev:dc && bun run dev",
+    "dotenvx:start": "dotenvx run -- bun start",
+    "commit": "lint-staged && cz",
+    "dev": "dotenvx run -- bun --watch src/app.ts",
+    "build": "bun build.ts"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "./cz.config.cjs"
+    }
+  },
+  "dependencies": {
+    "@orpc/client": "^1.3.0",
+    "@orpc/openapi": "^1.3.0",
+    "@orpc/server": "^1.3.0",
+    "@prisma/client": "^6.8.2",
+    "effect": "^3.16.2",
+    "hono": "^4.7.10",
+    "minio": "^8.0.5",
+    "prisma": "^6.8.2",
+    "redis": "^5.1.1"
+  }
+}

@@ -1,0 +1,23 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/providers/prisma/generated"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Task {
+  id    Int    @id @default(autoincrement())
+  title String
+  desc  String @default("")
+  files File[]
+}
+
+model File {
+  id          Int    @id @default(autoincrement())
+  storagePath String
+  Task        Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId      Int
+}
